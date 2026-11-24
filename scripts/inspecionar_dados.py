@@ -9,7 +9,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
-DADOS = Path(__file__).resolve().parent.parent / "data"
+DADOS = Path(__file__).resolve().parent.parent / "dados"
 
 def inspecionar_tribunal():
     bruto = (DADOS / "tribunal.csv").read_bytes()

@@ -5,7 +5,7 @@ BEGIN;
 
 -- 1. Duplicados 
 -- Liste primeiro. Se houver linhas, a operação decide qual versão vale
--- (ver pergunta 6 em docs/DIAGNOSTICO.md) e remove as outras antes de seguir.
+-- (ver pergunta O5 em docs/DIAGNOSTICO.md) e remove as outras antes de seguir.
 --   SELECT evento_id, count(*) FROM pagamento GROUP BY evento_id HAVING count(*) > 1;
 
 -- 2. Pagamento: um evento do tribunal = uma linha 

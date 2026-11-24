@@ -7,6 +7,7 @@ Fatos reproduzíveis com `python scripts/inspecionar_dados.py`. O script de impo
 ## 1. Diagnóstico (do mais grave ao menos grave)
 
 | # | Problema | Evidência | Impacto | Tipo |
+|---|---|---|---|---|
 | 1 | Soma sem controle de repetição | `pagamentos.json`: `ev-002` repetido (itens 2 e 4); `ev-001` com 15.000 (item 1) e 15.500 (item 9, mais novo). `schema.sql`: `evento_id` sem `UNIQUE`. Reexecutar o arquivo é parte do fluxo (passo 2) e o arquivo cobre 10/03 a 10/08, não 7 dias | `0012345-10.2019.8.26.0053`: 15.000 + 2.500,50 + 2.500,50 + 15.500 = **35.500,00**; o certo é **18.000,50**. Cada reexecução soma de novo | Causa |
 | 2 | Estorno somado como pagamento | `ev-006` (+5.000) e `ev-007` (`estorno`, 5.000) em `0034567-32.2018.8.26.0405`; a documentação diz `tipo` "sempre pagamento" | Total **10.000,00** em vez de **0,00** (parece 80% pago sem ter pago nada) | Consequência do 10 |
 | 3 | Falhas ignoradas em silêncio | Passo 5. Não entram: `ev-004` (valor `null`), `ev-009` (-200, barrado pelo `CHECK`), `ev-010` (sem processo, R$ 750), `ev-011` (R$ 4.000; `0067890...0053` não está no hub) | O dinheiro some do total sem aviso; ninguém sabe onde está a diferença | Causa |
@@ -20,6 +21,7 @@ Fatos reproduzíveis com `python scripts/inspecionar_dados.py`. O script de impo
 | 11 | O banco não impede os erros | Sem `UNIQUE`, sem `atualizado_em`, sem `apresentado_em`/prazo, sem tabela de rejeitados; o processo fala em "total pago" mas o schema não tem essa coluna | Cada erro acima entra sem barreira | Causa |
 
 | Processo | Soma simples (premissa) | Total limpo |
+|---|---|---|
 | `0012345-10.2019.8.26.0053` | 35.500,00 | 18.000,50 |
 | `0034567-32.2018.8.26.0405` | 10.000,00 | 0,00 |
 
